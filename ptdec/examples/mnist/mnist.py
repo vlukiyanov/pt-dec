@@ -15,7 +15,7 @@ from ptdec.dec import DEC
 from ptdec.model import train, predict
 from ptsdae.sdae import StackedDenoisingAutoEncoder
 import ptsdae.model as ae
-from ptsdae.utils import cluster_accuracy
+from ptdec.utils import cluster_accuracy
 
 
 class CachedMNIST(Dataset):

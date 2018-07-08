@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(
-    name='pt-dec',
+    name='ptdec',
     version='1.0',
     description='PyTorch implementation of DEC.',
     author='Vladimir Lukiyanov',
@@ -22,7 +22,8 @@ setup(
         'xlrd>=1.0.0',
         'cytoolz>=0.9.0.1',
         'tqdm>=4.11.2',
-        'scikit-learn>=0.19.1'
+        'scikit-learn>=0.19.1',
+        'ptsdae>=1.0.0'
     ],
-    packages=['pt-dec']
+    packages=['ptdec']
 )

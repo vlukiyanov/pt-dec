@@ -12,7 +12,7 @@ def cluster_accuracy(y_true, y_predicted, cluster_number: Optional[int] = None):
     :param y_true: list of true cluster numbers, an integer array 0-indexed
     :param y_predicted: list  of predicted cluster numbers, an integer array 0-indexed
     :param cluster_number: number of clusters, if None then calculated from input
-    :return: clustering accuracy
+    :return: reassignment dictionary, clustering accuracy
     """
     if cluster_number is None:
         cluster_number = max(y_predicted.max(), y_true.max()) + 1  # assume labels are 0-indexed
@@ -20,7 +20,8 @@ def cluster_accuracy(y_true, y_predicted, cluster_number: Optional[int] = None):
     for i in range(y_predicted.size):
         count_matrix[y_predicted[i], y_true[i]] += 1
     reassignment = np.dstack(linear_sum_assignment(count_matrix.max() - count_matrix))[0]
-    return count_matrix[reassignment[:, 0], reassignment[:, 1]].sum() / y_predicted.size
+    accuracy = count_matrix[reassignment[:, 0], reassignment[:, 1]].sum() / y_predicted.size
+    return {item[1]: item[0] for item in reassignment}, accuracy
 
 
 def target_distribution(batch: torch.Tensor) -> torch.Tensor:

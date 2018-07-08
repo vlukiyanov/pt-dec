@@ -15,6 +15,7 @@ def train(
         epochs: int,
         batch_size: int,
         optimizer: torch.optim.Optimizer,
+        stopping_delta: Optional[float] = None,
         cuda: bool = True,
         sampler: Optional[torch.utils.data.sampler.Sampler] = None,
         silent: bool =False,
@@ -30,6 +31,7 @@ def train(
     :param epochs: number of training epochs
     :param batch_size: size of the batch to train with
     :param optimizer: instance of optimizer to use
+    :param stopping_delta: label delta as a proportion to use for stopping, None to disable, default None
     :param cuda: whether to use CUDA, defaults to True
     :param sampler: optional sampler to use in the DataLoader, defaults to None
     :param silent: set to True to prevent printing out summary statistics, defaults to False
@@ -49,7 +51,6 @@ def train(
     train_dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
-        pin_memory=cuda,
         sampler=sampler,
         shuffle=True
     )
@@ -81,7 +82,7 @@ def train(
     actual = torch.cat(actual).long()
     predicted = kmeans.fit_predict(torch.cat(features).numpy())
     predicted_previous = torch.tensor(np.copy(predicted), dtype=torch.long)
-    accuracy = cluster_accuracy(predicted, actual.cpu().numpy())
+    _, accuracy = cluster_accuracy(predicted, actual.cpu().numpy())
     cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float)
     if cuda:
         cluster_centers = cluster_centers.cuda(async=True)
@@ -134,8 +135,11 @@ def train(
                     update_callback(accuracy, loss_value, delta_label)
         predicted, actual = predict(dataset, model, evaluate_batch_size, silent=True, return_actual=True)
         delta_label = float((predicted != predicted_previous).float().sum().item()) / predicted_previous.shape[0]
+        if stopping_delta is not None and delta_label < stopping_delta:
+            print('Early stopping as label delta "%1.5f" less than "%1.5f".' % (delta_label, stopping_delta))
+            break
         predicted_previous = predicted
-        accuracy = cluster_accuracy(predicted.numpy(), actual.numpy())
+        _, accuracy = cluster_accuracy(predicted.cpu().numpy(), actual.cpu().numpy())
         data_iterator.set_postfix(
             epo=epoch,
             acc='%.4f' % (accuracy or 0.0),
@@ -167,7 +171,6 @@ def predict(
     dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
-        pin_memory=cuda,
         shuffle=False
     )
     data_iterator = tqdm(

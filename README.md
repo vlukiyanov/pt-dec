@@ -9,6 +9,8 @@ An example using MNIST data can be found in the `examples/mnist/mnist.py` which 
 
 Here is an example [confusion matrix](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html), true labels on y-axis and predicted labels on the x-axis.
 
+![Alt text](confusion_2f447ee621ea4a8aa818ffcedae43b21.png)
+
 ## Usage
 
 This is distributed as a Python package `ptdec` and can be installed with `python setup.py install` after installing `ptsdae` from https://github.com/vlukiyanov/pt-sdae. The PyTorch `nn.Module` class representing the DEC is `DEC` in `ptdec.dec`, while the `train` function from `ptdec.model` is used to train DEC.

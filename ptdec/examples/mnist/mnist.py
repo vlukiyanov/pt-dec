@@ -127,7 +127,9 @@ def main(
         embedding_dimension=28*28,
         hidden_dimension=10,
         ae=autoencoder
-    ).cuda()
+    )
+    if cuda:
+        model.cuda()
     dec_optimizer = SGD(model.parameters(), lr=0.01, momentum=0.9)
     train(
         dataset=ds_train,
@@ -135,7 +137,7 @@ def main(
         epochs=100,
         batch_size=256,
         optimizer=dec_optimizer,
-        stopping_delta=0.05,
+        stopping_delta=0.000001,
         cuda=cuda
     )
     predicted, actual = predict(ds_train, model, 1024, silent=True, return_actual=True)

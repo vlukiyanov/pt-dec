@@ -23,7 +23,7 @@ class TestClusterAssignment(TestCase):
         """
         test_tensor = Variable(torch.Tensor([-2, -2]).float().unsqueeze(0))
         den = float(1)/3 + float(1)/19
-        gold = torch.Tensor([(float(1)/3)/den, (float(1)/19)/den])
+        gold = torch.Tensor([(float(1)/19)/den, (float(1)/3)/den])
         output = self.ca(test_tensor).data
         self.assertAlmostEqual(
             (gold-output).numpy()[0][0],

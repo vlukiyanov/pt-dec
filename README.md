@@ -9,7 +9,7 @@ An example using MNIST data can be found in the `examples/mnist/mnist.py` which 
 
 Here is an example [confusion matrix](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html), true labels on y-axis and predicted labels on the x-axis.
 
-![Alt text](confusion_2f447ee621ea4a8aa818ffcedae43b21.png)
+![Alt text](confusion.png)
 
 ## Usage
 

@@ -18,7 +18,7 @@ def train(
         stopping_delta: Optional[float] = None,
         cuda: bool = True,
         sampler: Optional[torch.utils.data.sampler.Sampler] = None,
-        silent: bool =False,
+        silent: bool = False,
         update_freq: int = 10,
         evaluate_batch_size: int = 1024,
         update_callback: Optional[Callable[[float, float], None]] = None,
@@ -76,7 +76,7 @@ def train(
             batch, value = batch  # if we have a prediction label, separate it to actual
             actual.append(value)
         if cuda:
-            batch = batch.cuda(async=True)
+            batch = batch.cuda(non_blocking=True)
         batch = batch.squeeze(1).view(batch.size(0), -1)
         features.append(model.ae.encoder(batch).detach().cpu())
     actual = torch.cat(actual).long()
@@ -85,7 +85,7 @@ def train(
     _, accuracy = cluster_accuracy(predicted, actual.cpu().numpy())
     cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float)
     if cuda:
-        cluster_centers = cluster_centers.cuda(async=True)
+        cluster_centers = cluster_centers.cuda(non_blocking=True)
     model.assignment.cluster_centers = torch.nn.Parameter(cluster_centers)
     loss_function = nn.KLDivLoss(size_average=False)
     delta_label = None
@@ -108,11 +108,11 @@ def train(
             if (isinstance(batch, tuple) or isinstance(batch, list)) and len(batch) == 2:
                 batch, _ = batch  # if we have a prediction label, strip it away
             if cuda:
-                batch = batch.cuda(async=True)
+                batch = batch.cuda(non_blocking=True)
             batch = batch.squeeze(1).view(batch.size(0), -1)
             output = model(batch)
             target = target_distribution(output).detach()
-            loss = loss_function(output.log(), target)/output.shape[0]
+            loss = loss_function(output.log(), target) / output.shape[0]
             data_iterator.set_postfix(
                 epo=epoch,
                 acc='%.4f' % (accuracy or 0.0),
@@ -190,7 +190,7 @@ def predict(
         elif return_actual:
             raise ValueError('Dataset has no actual value to unpack, but return_actual is set.')
         if cuda:
-            batch = batch.cuda(async=True)
+            batch = batch.cuda(non_blocking=True)
         batch = batch.squeeze(1).view(batch.size(0), -1)
         features.append(model(batch).detach().cpu())  # move to the CPU to prevent out of memory on the GPU
     if return_actual:

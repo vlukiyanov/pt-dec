@@ -45,7 +45,7 @@ class ClusterAssignment(nn.Module):
         :return: FloatTensor [batch size, number of clusters]
         """
         norm_squared = torch.sum((batch.unsqueeze(1) - self.cluster_centers)**2, 2)
-        numerator = 1.0/(1.0 + (norm_squared/self.alpha))
+        numerator = 1.0 / (1.0 + (norm_squared / self.alpha))
         power = -float(self.alpha + 1) / 2
         numerator = numerator**power
-        return (numerator.t()/torch.sum(numerator, 1)).t()
+        return (numerator.t() / torch.sum(numerator, 1)).t()

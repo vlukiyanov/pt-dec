@@ -133,7 +133,7 @@ def train(
                 )
                 if update_callback is not None:
                     update_callback(accuracy, loss_value, delta_label)
-        predicted, actual = predict(dataset, model, evaluate_batch_size, silent=True, return_actual=True)
+        predicted, actual = predict(dataset, model, evaluate_batch_size, silent=True, return_actual=True, cuda=cuda)
         delta_label = float((predicted != predicted_previous).float().sum().item()) / predicted_previous.shape[0]
         if stopping_delta is not None and delta_label < stopping_delta:
             print('Early stopping as label delta "%1.5f" less than "%1.5f".' % (delta_label, stopping_delta))

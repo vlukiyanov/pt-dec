@@ -12,4 +12,5 @@ flake8>=3.6.0
 tensorboardX>=1.2
 setuptools>=40.2.0
 torchvision>=0.2.1
+seaborn>=0.9.0
 -e git://github.com/vlukiyanov/pt-sdae.git#egg=ptsdae

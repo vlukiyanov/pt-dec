@@ -1,2 +1,2 @@
 #!/bin/bash
-flake8 --ignore=E501 ptdec
+flake8 --ignore=E501 ptdec example

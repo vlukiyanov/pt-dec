@@ -8,5 +8,8 @@ install:
   - python setup.py install
 # command to run tests
 script:
-  - python setup.py test
+  - pytest --cov=ptdec tests
   - python examples/mnist/mnist.py --cuda=False --batch-size=48 --pretrain-epochs=1 --finetune-epochs=1 --testing-mode=True
+after_success:
+  - codecov
+

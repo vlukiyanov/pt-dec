@@ -77,7 +77,6 @@ def train(
             actual.append(value)
         if cuda:
             batch = batch.cuda(non_blocking=True)
-        batch = batch.squeeze(1).view(batch.size(0), -1)
         features.append(model.ae.encoder(batch).detach().cpu())
     actual = torch.cat(actual).long()
     predicted = kmeans.fit_predict(torch.cat(features).numpy())
@@ -109,7 +108,6 @@ def train(
                 batch, _ = batch  # if we have a prediction label, strip it away
             if cuda:
                 batch = batch.cuda(non_blocking=True)
-            batch = batch.squeeze(1).view(batch.size(0), -1)
             output = model(batch)
             target = target_distribution(output).detach()
             loss = loss_function(output.log(), target) / output.shape[0]
@@ -191,7 +189,6 @@ def predict(
             raise ValueError('Dataset has no actual value to unpack, but return_actual is set.')
         if cuda:
             batch = batch.cuda(non_blocking=True)
-        batch = batch.squeeze(1).view(batch.size(0), -1)
         features.append(model(batch).detach().cpu())  # move to the CPU to prevent out of memory on the GPU
     if return_actual:
         return torch.cat(features).max(1)[1], torch.cat(actual).long()

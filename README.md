@@ -20,7 +20,7 @@ This is distributed as a Python package `ptdec` and can be installed with `pytho
 ## Other implementations of DEC
 
 * Original Caffe: https://github.com/piiswrong/dec
-* PyTorch: https://github.com/CharlesNord/DEC-pytorch and https://github.com/CharlesNord/DEC-pytorch
+* PyTorch: https://github.com/CharlesNord/DEC-pytorch and https://github.com/eelxpeng/dec-pytorch
 * Keras: https://github.com/XifengGuo/DEC-keras and https://github.com/fferroni/DEC-Keras
 * MXNet: https://github.com/apache/incubator-mxnet/blob/master/example/deep-embedded-clustering/dec.py
 * Chainer: https://github.com/ymym3412/DeepEmbeddedClustering

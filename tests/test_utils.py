@@ -20,6 +20,10 @@ class TestClusterAccuracy(TestCase):
             cluster_accuracy(true_value1, pred_value1, 3)[1],
             1.0
         )
+        self.assertDictEqual(
+            cluster_accuracy(true_value1, pred_value1)[0],
+            {0: 0, 1: 2, 2: 1}
+        )
         true_value2 = np.array([1, 1, 1, 1, 1, 1], dtype=np.int64)
         pred_value2 = np.array([0, 1, 2, 3, 4, 5], dtype=np.int64)
         self.assertAlmostEqual(

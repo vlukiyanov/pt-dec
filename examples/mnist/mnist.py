@@ -135,7 +135,7 @@ def main(
         cluster_number=10,
         embedding_dimension=28 * 28,
         hidden_dimension=10,
-        ae=autoencoder
+        encoder=autoencoder.encoder
     )
     if cuda:
         model.cuda()
@@ -152,7 +152,7 @@ def main(
     predicted, actual = predict(ds_train, model, 1024, silent=True, return_actual=True, cuda=cuda)
     actual = actual.cpu().numpy()
     predicted = predicted.cpu().numpy()
-    reassignment, accuracy = cluster_accuracy(predicted, actual)
+    reassignment, accuracy = cluster_accuracy(actual, predicted)
     print('Final DEC accuracy: %s' % accuracy)
     if not testing_mode:
         predicted_reassigned = [reassignment[item] for item in predicted]  # TODO numpify

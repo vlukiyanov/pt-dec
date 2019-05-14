@@ -77,7 +77,7 @@ def train(
             actual.append(value)
         if cuda:
             batch = batch.cuda(non_blocking=True)
-        features.append(model.ae.encoder(batch).detach().cpu())
+        features.append(model.encoder(batch).detach().cpu())
     actual = torch.cat(actual).long()
     predicted = kmeans.fit_predict(torch.cat(features).numpy())
     predicted_previous = torch.tensor(np.copy(predicted), dtype=torch.long)
@@ -120,7 +120,7 @@ def train(
             optimizer.zero_grad()
             loss.backward()
             optimizer.step(closure=None)
-            features.append(model.ae.encoder(batch).detach().cpu())
+            features.append(model.encoder(batch).detach().cpu())
             if update_freq is not None and index % update_freq == 0:
                 loss_value = float(loss.item())
                 data_iterator.set_postfix(

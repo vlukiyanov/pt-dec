@@ -8,7 +8,7 @@ def test_train_with_prediction():
     model = Mock()
     model.return_value = torch.zeros(100, 100).requires_grad_()
     model.cluster_number = 10
-    model.ae.encoder.return_value = torch.zeros(100, 100)
+    model.encoder.return_value = torch.zeros(100, 100)
     optimizer = Mock()
     dataset = TensorDataset(torch.zeros(100, 100), torch.zeros(100, 1))
     train(

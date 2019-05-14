@@ -10,7 +10,7 @@ class DEC(nn.Module):
             cluster_number: int,
             embedding_dimension: int,
             hidden_dimension: int,
-            ae: torch.nn.Module,
+            encoder: torch.nn.Module,
             alpha: float = 1.0):
         """
         Module which holds all the moving parts of the DEC algorithm, as described in
@@ -19,13 +19,11 @@ class DEC(nn.Module):
         :param cluster_number: number of clusters
         :param embedding_dimension: embedding dimension, input to the encoder
         :param hidden_dimension: hidden dimension, output of the encoder
-        :param ae: autoencoder to use, must have .encoder attribute
+        :param encoder: encoder to use
         :param alpha: parameter representing the degrees of freedom in the t-distribution, default 1.0
         """
         super(DEC, self).__init__()
-        self.ae = ae  # AutoEncoder stage
-        if not hasattr(ae, 'encoder'):
-            raise ValueError('Autoencoder must have a .encoder attribute.')
+        self.encoder = encoder
         self.embedding_dimension = embedding_dimension
         self.hidden_dimension = hidden_dimension
         self.cluster_number = cluster_number
@@ -40,4 +38,4 @@ class DEC(nn.Module):
         :param batch: [batch size, embedding dimension] FloatTensor
         :return: [batch size, number of clusters] FloatTensor
         """
-        return self.assignment(self.ae.encoder(batch))
+        return self.assignment(self.encoder(batch))

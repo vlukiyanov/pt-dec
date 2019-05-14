@@ -34,6 +34,12 @@ class TestClusterAccuracy(TestCase):
             cluster_accuracy(true_value2, pred_value2, 6)[1],
             1.0 / 6.0
         )
+        true_value3 = np.array([1, 3, 1, 3, 0, 2], dtype=np.int64)
+        pred_value3 = np.array([2, 1, 2, 1, 3, 0], dtype=np.int64)
+        self.assertDictEqual(
+            cluster_accuracy(true_value3, pred_value3)[0],
+            {2: 1, 1: 3, 3: 0, 0: 2}
+        )
 
 
 class TestTargetDistribution(TestCase):

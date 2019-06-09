@@ -180,7 +180,7 @@ def predict(
     features = []
     actual = []
     model.eval()
-    for index, batch in enumerate(data_iterator):
+    for batch in data_iterator:
         if (isinstance(batch, tuple) or isinstance(batch, list)) and len(batch) == 2:
             batch, value = batch  # unpack if we have a prediction label
             if return_actual:

@@ -1,4 +1,5 @@
 # pt-dec
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5877a6b3baa342c3bb2d8f4a4c94f8dd)](https://app.codacy.com/app/vlukiyanov/pt-dec?utm_source=github.com&utm_medium=referral&utm_content=vlukiyanov/pt-dec&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.org/vlukiyanov/pt-dec.svg?branch=master)](https://travis-ci.org/vlukiyanov/pt-dec) [![codecov](https://codecov.io/gh/vlukiyanov/pt-dec/branch/master/graph/badge.svg)](https://codecov.io/gh/vlukiyanov/pt-dec)
 
 PyTorch implementation of a version of the Deep Embedded Clustering (DEC) algorithm. Compatible with PyTorch 1.0.0 and Python 3.6 or 3.7 with or without CUDA.

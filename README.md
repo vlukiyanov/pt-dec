@@ -4,7 +4,7 @@
 
 PyTorch implementation of a version of the Deep Embedded Clustering (DEC) algorithm. Compatible with PyTorch 1.0.0 and Python 3.6 or 3.7 with or without CUDA.
 
-This follows (*or attempts to; note this implementation is unofficial*) the algorithm described in "Unsupervised Deep Embedding for Clustering Analysis" of Junyuan Xie, Ross Girshick, Ali Farhadi (https://arxiv.org/abs/1511.06335).
+This follows (*or attempts to; note this implementation is unofficial*) the algorithm described in "Unsupervised Deep Embedding for Clustering Analysis" of Junyuan Xie, Ross Girshick, Ali Farhadi (<https://arxiv.org/abs/1511.06335>).
 
 ## Examples
 
@@ -20,8 +20,8 @@ This is distributed as a Python package `ptdec` and can be installed with `pytho
 
 ## Other implementations of DEC
 
-* Original Caffe: https://github.com/piiswrong/dec
-* PyTorch: https://github.com/CharlesNord/DEC-pytorch and https://github.com/eelxpeng/dec-pytorch
-* Keras: https://github.com/XifengGuo/DEC-keras and https://github.com/fferroni/DEC-Keras
-* MXNet: https://github.com/apache/incubator-mxnet/blob/master/example/deep-embedded-clustering/dec.py
-* Chainer: https://github.com/ymym3412/DeepEmbeddedClustering
+*   Original Caffe: <https://github.com/piiswrong/dec>
+*   PyTorch: <https://github.com/CharlesNord/DEC-pytorch> and <https://github.com/eelxpeng/dec-pytorch>
+*   Keras: <https://github.com/XifengGuo/DEC-keras> and <https://github.com/fferroni/DEC-Keras>
+*   MXNet: <https://github.com/apache/incubator-mxnet/blob/master/example/deep-embedded-clustering/dec.py>
+*   Chainer: <https://github.com/ymym3412/DeepEmbeddedClustering>

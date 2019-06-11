@@ -133,7 +133,6 @@ def main(
     print('DEC stage.')
     model = DEC(
         cluster_number=10,
-        embedding_dimension=28 * 28,
         hidden_dimension=10,
         encoder=autoencoder.encoder
     )

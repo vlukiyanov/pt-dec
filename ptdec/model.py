@@ -9,20 +9,19 @@ from tqdm import tqdm
 from ptdec.utils import target_distribution, cluster_accuracy
 
 
-def train(
-        dataset: torch.utils.data.Dataset,
-        model: torch.nn.Module,
-        epochs: int,
-        batch_size: int,
-        optimizer: torch.optim.Optimizer,
-        stopping_delta: Optional[float] = None,
-        cuda: bool = True,
-        sampler: Optional[torch.utils.data.sampler.Sampler] = None,
-        silent: bool = False,
-        update_freq: int = 10,
-        evaluate_batch_size: int = 1024,
-        update_callback: Optional[Callable[[float, float], None]] = None,
-        epoch_callback: Optional[Callable[[int, torch.nn.Module], None]] = None) -> None:
+def train(dataset: torch.utils.data.Dataset,
+          model: torch.nn.Module,
+          epochs: int,
+          batch_size: int,
+          optimizer: torch.optim.Optimizer,
+          stopping_delta: Optional[float] = None,
+          cuda: bool = True,
+          sampler: Optional[torch.utils.data.sampler.Sampler] = None,
+          silent: bool = False,
+          update_freq: int = 10,
+          evaluate_batch_size: int = 1024,
+          update_callback: Optional[Callable[[float, float], None]] = None,
+          epoch_callback: Optional[Callable[[int, torch.nn.Module], None]] = None) -> None:
     """
     Train the DEC model given a dataset, a model instance and various configuration parameters.
 
@@ -148,13 +147,12 @@ def train(
             epoch_callback(epoch, model)
 
 
-def predict(
-        dataset: torch.utils.data.Dataset,
-        model: torch.nn.Module,
-        batch_size: int = 1024,
-        cuda: bool = True,
-        silent: bool = False,
-        return_actual: bool = False) -> Union[Tuple[torch.Tensor, torch.Tensor], torch.Tensor]:
+def predict(dataset: torch.utils.data.Dataset,
+            model: torch.nn.Module,
+            batch_size: int = 1024,
+            cuda: bool = True,
+            silent: bool = False,
+            return_actual: bool = False) -> Union[Tuple[torch.Tensor, torch.Tensor], torch.Tensor]:
     """
     Predict clusters for a dataset given a DEC model instance and various configuration parameters.
 

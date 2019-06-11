@@ -5,12 +5,11 @@ from typing import Optional
 
 
 class ClusterAssignment(nn.Module):
-    def __init__(
-            self,
-            cluster_number: int,
-            embedding_dimension: int,
-            alpha: float = 1.0,
-            cluster_centers: Optional[torch.Tensor] = None):
+    def __init__(self,
+                 cluster_number: int,
+                 embedding_dimension: int,
+                 alpha: float = 1.0,
+                 cluster_centers: Optional[torch.Tensor] = None) -> None:
         """
         Module to handle the soft assignment, for a description see in 3.1.1. in Xie/Girshick/Farhadi,
         where the Student's t-distribution is used measure similarity between feature vector and each

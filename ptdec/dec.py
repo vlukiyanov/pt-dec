@@ -7,7 +7,6 @@ from ptdec.cluster import ClusterAssignment
 class DEC(nn.Module):
     def __init__(self,
                  cluster_number: int,
-                 embedding_dimension: int,
                  hidden_dimension: int,
                  encoder: torch.nn.Module,
                  alpha: float = 1.0):
@@ -23,7 +22,6 @@ class DEC(nn.Module):
         """
         super(DEC, self).__init__()
         self.encoder = encoder
-        self.embedding_dimension = embedding_dimension
         self.hidden_dimension = hidden_dimension
         self.cluster_number = cluster_number
         self.alpha = alpha

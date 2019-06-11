@@ -10,7 +10,7 @@ class TestAutoEncoder(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.ae = StackedDenoisingAutoEncoder([100, 50, 5])
-        cls.dec = DEC(2, 100, 5, cls.ae.encoder)
+        cls.dec = DEC(2, 5, cls.ae.encoder)
 
     def test_dimension(self):
         """

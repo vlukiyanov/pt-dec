@@ -84,7 +84,8 @@ def train(dataset: torch.utils.data.Dataset,
     cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float, requires_grad=True)
     if cuda:
         cluster_centers = cluster_centers.cuda(non_blocking=True)
-    model.state_dict()['assignment.cluster_centers'] = cluster_centers
+    with torch.no_grad():
+        model.state_dict()['assignment.cluster_centers'].copy_(cluster_centers)
     loss_function = nn.KLDivLoss(size_average=False)
     delta_label = None
     for epoch in range(epochs):

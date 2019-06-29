@@ -85,6 +85,7 @@ def train(dataset: torch.utils.data.Dataset,
     if cuda:
         cluster_centers = cluster_centers.cuda(non_blocking=True)
     with torch.no_grad():
+        # initialise the cluster centers
         model.state_dict()['assignment.cluster_centers'].copy_(cluster_centers)
     loss_function = nn.KLDivLoss(size_average=False)
     delta_label = None

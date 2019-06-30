@@ -81,10 +81,12 @@ def train(dataset: torch.utils.data.Dataset,
     predicted = kmeans.fit_predict(torch.cat(features).numpy())
     predicted_previous = torch.tensor(np.copy(predicted), dtype=torch.long)
     _, accuracy = cluster_accuracy(predicted, actual.cpu().numpy())
-    cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float)
+    cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float, requires_grad=True)
     if cuda:
         cluster_centers = cluster_centers.cuda(non_blocking=True)
-    model.assignment.cluster_centers = torch.nn.Parameter(cluster_centers)
+    with torch.no_grad():
+        # initialise the cluster centers
+        model.state_dict()['assignment.cluster_centers'].copy_(cluster_centers)
     loss_function = nn.KLDivLoss(size_average=False)
     delta_label = None
     for epoch in range(epochs):

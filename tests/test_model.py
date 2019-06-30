@@ -1,7 +1,7 @@
 from ptdec.model import predict, train
 import torch
 from torch.utils.data import TensorDataset
-from unittest.mock import Mock
+from unittest.mock import MagicMock, Mock
 
 
 def test_train_with_prediction():
@@ -9,6 +9,7 @@ def test_train_with_prediction():
     model.return_value = torch.zeros(100, 100).requires_grad_()
     model.cluster_number = 10
     model.encoder.return_value = torch.zeros(100, 100)
+    model.state_dict.return_value = MagicMock()
     optimizer = Mock()
     dataset = TensorDataset(torch.zeros(100, 100), torch.zeros(100, 1))
     train(

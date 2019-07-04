@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
+from torch.utils.data.dataloader import DataLoader, default_collate
 from typing import Tuple, Callable, Optional, Union
 from tqdm import tqdm
 
@@ -15,6 +15,7 @@ def train(dataset: torch.utils.data.Dataset,
           batch_size: int,
           optimizer: torch.optim.Optimizer,
           stopping_delta: Optional[float] = None,
+          collate_fn = default_collate,
           cuda: bool = True,
           sampler: Optional[torch.utils.data.sampler.Sampler] = None,
           silent: bool = False,
@@ -31,6 +32,7 @@ def train(dataset: torch.utils.data.Dataset,
     :param batch_size: size of the batch to train with
     :param optimizer: instance of optimizer to use
     :param stopping_delta: label delta as a proportion to use for stopping, None to disable, default None
+    :param collate_fn: function to merge a list of samples into mini-batch
     :param cuda: whether to use CUDA, defaults to True
     :param sampler: optional sampler to use in the DataLoader, defaults to None
     :param silent: set to True to prevent printing out summary statistics, defaults to False
@@ -43,6 +45,7 @@ def train(dataset: torch.utils.data.Dataset,
     static_dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
+        collate_fn=collate_fn,
         pin_memory=False,
         sampler=sampler,
         shuffle=False
@@ -50,6 +53,7 @@ def train(dataset: torch.utils.data.Dataset,
     train_dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
+        collate_fn=collate_fn,
         sampler=sampler,
         shuffle=True
     )
@@ -130,7 +134,15 @@ def train(dataset: torch.utils.data.Dataset,
                 )
                 if update_callback is not None:
                     update_callback(accuracy, loss_value, delta_label)
-        predicted, actual = predict(dataset, model, evaluate_batch_size, silent=True, return_actual=True, cuda=cuda)
+        predicted, actual = predict(
+            dataset,
+            model,
+            batch_size=evaluate_batch_size,
+            collate_fn=collate_fn,
+            silent=True,
+            return_actual=True,
+            cuda=cuda
+        )
         delta_label = float((predicted != predicted_previous).float().sum().item()) / predicted_previous.shape[0]
         if stopping_delta is not None and delta_label < stopping_delta:
             print('Early stopping as label delta "%1.5f" less than "%1.5f".' % (delta_label, stopping_delta))
@@ -150,6 +162,7 @@ def train(dataset: torch.utils.data.Dataset,
 def predict(dataset: torch.utils.data.Dataset,
             model: torch.nn.Module,
             batch_size: int = 1024,
+            collate_fn = default_collate,
             cuda: bool = True,
             silent: bool = False,
             return_actual: bool = False) -> Union[Tuple[torch.Tensor, torch.Tensor], torch.Tensor]:
@@ -159,6 +172,7 @@ def predict(dataset: torch.utils.data.Dataset,
     :param dataset: instance of Dataset to use for training
     :param model: instance of DEC model to predict
     :param batch_size: size of the batch to predict with, default 1024
+    :param collate_fn: function to merge a list of samples into mini-batch
     :param cuda: whether CUDA is used, defaults to True
     :param silent: set to True to prevent printing out summary statistics, defaults to False
     :param return_actual: return actual values, if present in the Dataset
@@ -167,6 +181,7 @@ def predict(dataset: torch.utils.data.Dataset,
     dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
+        collate_fn=collate_fn,
         shuffle=False
     )
     data_iterator = tqdm(

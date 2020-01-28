@@ -15,7 +15,6 @@ class DEC(nn.Module):
         Xie/Girshick/Farhadi; this includes the AutoEncoder stage and the ClusterAssignment stage.
 
         :param cluster_number: number of clusters
-        :param embedding_dimension: embedding dimension, input to the encoder
         :param hidden_dimension: hidden dimension, output of the encoder
         :param encoder: encoder to use
         :param alpha: parameter representing the degrees of freedom in the t-distribution, default 1.0

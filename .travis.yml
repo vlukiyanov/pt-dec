@@ -11,6 +11,7 @@ install:
 script:
   - black --fast --check ptdec/.
   - black --fast --check examples/.
+  - black --fast --check tests/.
   - pytest --cov=ptdec tests
   - python examples/mnist/mnist.py --cuda=False --batch-size=48 --pretrain-epochs=1 --finetune-epochs=1 --testing-mode=True
 after_success:

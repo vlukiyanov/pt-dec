@@ -15,7 +15,9 @@ def cluster_accuracy(y_true, y_predicted, cluster_number: Optional[int] = None):
     :return: reassignment dictionary, clustering accuracy
     """
     if cluster_number is None:
-        cluster_number = max(y_predicted.max(), y_true.max()) + 1  # assume labels are 0-indexed
+        cluster_number = (
+            max(y_predicted.max(), y_true.max()) + 1
+        )  # assume labels are 0-indexed
     count_matrix = np.zeros((cluster_number, cluster_number), dtype=np.int64)
     for i in range(y_predicted.size):
         count_matrix[y_predicted[i], y_true[i]] += 1

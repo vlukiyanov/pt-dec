@@ -18,7 +18,7 @@ def test_train_with_prediction():
         epochs=1,
         batch_size=100,
         optimizer=optimizer,
-        cuda=False
+        cuda=False,
     )
     assert model.call_count == 2
 

@@ -19,7 +19,4 @@ class TestAutoEncoder(TestCase):
         """
         input_tensor = Variable(torch.Tensor(1, 100).fill_(1.0))
         output_tensor = self.dec(input_tensor)
-        self.assertEqual(
-            tuple(output_tensor.size()),
-            (1, 2)
-        )
+        self.assertEqual(tuple(output_tensor.size()), (1, 2))

@@ -5,11 +5,13 @@ from ptdec.cluster import ClusterAssignment
 
 
 class DEC(nn.Module):
-    def __init__(self,
-                 cluster_number: int,
-                 hidden_dimension: int,
-                 encoder: torch.nn.Module,
-                 alpha: float = 1.0):
+    def __init__(
+        self,
+        cluster_number: int,
+        hidden_dimension: int,
+        encoder: torch.nn.Module,
+        alpha: float = 1.0,
+    ):
         """
         Module which holds all the moving parts of the DEC algorithm, as described in
         Xie/Girshick/Farhadi; this includes the AutoEncoder stage and the ClusterAssignment stage.
@@ -24,7 +26,9 @@ class DEC(nn.Module):
         self.hidden_dimension = hidden_dimension
         self.cluster_number = cluster_number
         self.alpha = alpha
-        self.assignment = ClusterAssignment(cluster_number, self.hidden_dimension, alpha)
+        self.assignment = ClusterAssignment(
+            cluster_number, self.hidden_dimension, alpha
+        )
 
     def forward(self, batch: torch.Tensor) -> torch.Tensor:
         """

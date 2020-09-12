@@ -38,7 +38,9 @@ class CachedMNIST(Dataset):
             self._cache[index] = list(self.ds[index])
             if self.cuda:
                 self._cache[index][0] = self._cache[index][0].cuda(non_blocking=True)
-                self._cache[index][1] = torch.tensor(self._cache[index][1], dtype = torch.long).cuda(non_blocking=True)
+                self._cache[index][1] = torch.tensor(
+                    self._cache[index][1], dtype=torch.long
+                ).cuda(non_blocking=True)
         return self._cache[index]
 
     def __len__(self) -> int:
